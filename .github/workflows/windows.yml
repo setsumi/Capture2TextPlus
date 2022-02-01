@@ -38,7 +38,7 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python-version }}
+         python-version: ${{ matrix.python-version }}
       # 安装Qt
       - name: Install Qt
         # 使用外部action。这个action专门用来安装Qt
