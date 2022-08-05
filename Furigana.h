@@ -20,7 +20,11 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef FURIGANA_H
 #define FURIGANA_H
 
+#if defined( Q_OS_MAC )
+#include "leptonica/allheaders.h"
+#else
 #include "allheaders.h"
+#endif
 
 class Furigana
 {

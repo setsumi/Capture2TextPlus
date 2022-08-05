@@ -26,13 +26,18 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMutex>
 #include <QRect>
 
-#ifdef __WIN32 || Q_OS_MAC
+#if defined( Q_OS_WIN32 ) || defined( Q_OS_MAC )
 #include "tesseract\baseapi.h"
 #else
 #include "baseapi.h"
 #endif
-#include "allheaders.h"
 
+
+#if defined( Q_OS_MAC )
+#include "leptonica/allheaders.h"
+#else
+#include "allheaders.h"
+#endif
 
 class OcrEngine
 {
