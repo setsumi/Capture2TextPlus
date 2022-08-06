@@ -131,7 +131,7 @@ mac{
 }
 
 # Linux Paths
-!win32{
+unix:!mac{
 INCLUDEPATH += /usr/include/tesseract/
 INCLUDEPATH += /usr/include/leptonica/
 }
