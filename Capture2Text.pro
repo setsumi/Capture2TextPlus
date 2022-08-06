@@ -127,7 +127,7 @@ mac{
     QT_CONFIG -= no-pkg-config 
     CONFIG += link_pkgconfig
 
-    PKGCONFIG += tesseract lept
+    PKGCONFIG += tesseract leptonica
 }
 
 # Linux Paths
