@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15]
+        os: [macos-11.0]
         qt_ver: [5.15.2]
         qt_arch: [clang_64]
     steps:
@@ -50,7 +50,7 @@ jobs:
       - name: build Capture2Text
         run: |
           qmake CONFIG+=release
-          CPATH=/usr/local/Cellar/tesseract/5.2.0/include make  -j`nproc` 
+          CPATH=/usr/local/Cellar/tesseract/5.2.0/include:/usr/local/Cellar/leptonica/1.82.0/include make  -j`nproc` 
       - name: Build AppImage
         run: |
           macdeployqt Capture2Text.app -qmldir=. -verbose=1
