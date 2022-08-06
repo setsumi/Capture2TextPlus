@@ -50,7 +50,7 @@ jobs:
       - name: build Capture2Text
         run: |
           qmake CONFIG+=release
-          CPATH=/usr/local/Cellar/tesseract/5.2.0/include:/usr/local/Cellar/leptonica/1.82.0/include make  -j`nproc` 
+          CPATH=/usr/local/Cellar/tesseract/5.2.0/include:/usr/local/Cellar/leptonica/1.82.0_1/include make  -j`nproc` 
       - name: Build AppImage
         run: |
           macdeployqt Capture2Text.app -qmldir=. -verbose=1
