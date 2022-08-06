@@ -123,6 +123,10 @@ HEADERS  += \
         WelcomeDialog.ui
 }
 
+mac{
+    QT_CONFIG -= no-pkg-config 
+    CONFIG += link_pkgconfig
+}
 
 # Linux Paths
 !win32{
