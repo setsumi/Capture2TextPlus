@@ -38,10 +38,11 @@ jobs:
           modules: qttexttospeech
       - name: install thirdparty dependencies
         run: |
-          brew reinstall tesseract 
+          brew reinstall tesseract@5.2.0 
           brew install leptonica
           brew install pkg-config
           brew install create-dmg
+          ls -al /usr/local/Cellar/tesseract/5.2.0
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
@@ -49,7 +50,7 @@ jobs:
       - name: build Capture2Text
         run: |
           qmake CONFIG+=release
-          make  -j`nproc` 
+          CPATH=/usr/local/Cellar/tesseract/5.2.0/include make  -j`nproc` 
       - name: Build AppImage
         run: |
           macdeployqt Capture2Text.app -qmldir=. -verbose=1
