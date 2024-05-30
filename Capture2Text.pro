@@ -153,5 +153,3 @@ LIBS += -llept
 # Needed for the icon
 RC_FILE = Capture2Text.rc
 
-
-include (QHotkey/qhotkey.pri)

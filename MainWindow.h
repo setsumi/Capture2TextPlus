@@ -132,7 +132,6 @@ private:
 
     Translate translate;
 
-    QList<QHotkey*> hotkeys;
 };
 
 #endif // MAINWINDOW_H
