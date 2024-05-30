@@ -21,6 +21,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #define PRE_PROCESS_H
 
 #include <QImage>
+
 #include "allheaders.h"
 #include "PreProcessCommon.h"
 
@@ -60,10 +61,6 @@ private:
     PIX *removeNoise(PIX *pixs);
     PIX *eraseFurigana(PIX *pixs);
     void setDPI(PIX *pixs);
-    bool eraseLineBelowPoint(PIX *pixs, int x, int y);
-    bool eraseLineToRightOfPoint(PIX *pixs, int x, int y);
-    void eraseConnectingBorderPixelsBelow(PIX *pixs, int belowY);
-    void eraseConnectingBorderPixelsRight(PIX *pixs, int rightOfX);
 
     void debugMsg(QString str, bool error=true);
     void debugImg(QString filename, PIX *pixs);
