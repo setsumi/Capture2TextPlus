@@ -436,11 +436,11 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
     {
 		if (Settings::getDebugSaveCaptureImage())
 		{
-			int border = (int)(qMin(displayRect.width(), displayRect.height()) / 8.2);
+			int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
 			displayRect.setLeft(displayRect.left() - border);
             displayRect.setTop(displayRect.top() - border);
-            displayRect.setWidth(displayRect.width() + border * 2);
-			displayRect.setHeight(displayRect.height() + border * 2);
+            displayRect.setWidth(displayRect.width() + border);
+			displayRect.setHeight(displayRect.height() + border);
 			QImage image = UtilsImg::takeScreenshot(displayRect);
 			if (!image.isNull()) {
 				image.save(getDebugImagePath("debug_capture.png"));
