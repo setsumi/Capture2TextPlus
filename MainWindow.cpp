@@ -434,18 +434,18 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
-		if (Settings::getDebugSaveCaptureImage())
-		{
-			int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
-			displayRect.setLeft(displayRect.left() - border);
+        if (Settings::getDebugSaveCaptureImage())
+        {
+            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+            displayRect.setLeft(displayRect.left() - border);
             displayRect.setTop(displayRect.top() - border);
             displayRect.setWidth(displayRect.width() + border);
-			displayRect.setHeight(displayRect.height() + border);
-			QImage image = UtilsImg::takeScreenshot(displayRect);
-			if (!image.isNull()) {
-				image.save(getDebugImagePath("debug_capture.png"));
-			}
-		}
+            displayRect.setHeight(displayRect.height() + border);
+            QImage image = UtilsImg::takeScreenshot(displayRect);
+            if (!image.isNull()) {
+                image.save(getDebugImagePath("debug_capture.png"));
+            }
+        }
 
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
@@ -561,13 +561,18 @@ void MainWindow::performTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
-        if (Settings::getDebugSaveCaptureImage())
-        {
-            QImage image = UtilsImg::takeScreenshot(displayRect);
-            if (!image.isNull()) {
-                image.save(getDebugImagePath("debug_capture.png"));
-            }
-        }
+		if (Settings::getDebugSaveCaptureImage())
+		{
+			int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+			displayRect.setLeft(displayRect.left() - border);
+			displayRect.setTop(displayRect.top() - border);
+			displayRect.setWidth(displayRect.width() + border);
+			displayRect.setHeight(displayRect.height() + border);
+			QImage image = UtilsImg::takeScreenshot(displayRect);
+			if (!image.isNull()) {
+				image.save(getDebugImagePath("debug_capture.png"));
+			}
+		}
 
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
@@ -673,6 +678,11 @@ void MainWindow::performBubbleCapture(QPoint pt)
     {
         if (Settings::getDebugSaveCaptureImage())
         {
+            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+            displayRect.setLeft(displayRect.left() - border);
+            displayRect.setTop(displayRect.top() - border);
+            displayRect.setWidth(displayRect.width() + border);
+            displayRect.setHeight(displayRect.height() + border);
             QImage image = UtilsImg::takeScreenshot(displayRect);
             if (!image.isNull()) {
                 image.save(getDebugImagePath("debug_capture.png"));
