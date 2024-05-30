@@ -37,7 +37,6 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #include "MouseHook.h"
 #include "UtilsCommon.h"
 #include "Speech.h"
-#include "qhotkey.h"
 
 
 MainWindow::MainWindow(bool portable)
