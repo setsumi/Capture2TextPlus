@@ -35,8 +35,6 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #include "SettingsDialog.h"
 #include "Translate.h"
 #include "WelcomeDialog.h"
-#include <QList>
-#include "qhotkey.h"
 
 class MainWindow : public QWidget
 {
@@ -131,7 +129,6 @@ private:
     WelcomeDialog welcomeDialog;
 
     Translate translate;
-
 };
 
 #endif // MAINWINDOW_H
