@@ -27,6 +27,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 QImage UtilsImg::takeScreenshot(const QRect &rect)
 {
     QScreen *screen = QGuiApplication::primaryScreen();
+
     if (!screen)
     {
         return QImage();

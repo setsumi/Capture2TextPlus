@@ -78,7 +78,7 @@ QString UtilsCommon::formatLogLine(QString format, QString ocrText, QDateTime ti
     QString line = format;
     line.replace("${tab}", "\t");
     line.replace("${linebreak}", "\n");
-    line.replace("${}", timestampToStr(timestamp));
+    line.replace("${timestamp}", timestampToStr(timestamp));
     line.replace("${file}", file);
     line.replace("${translation}", translation);
     line.replace("${capture}", ocrText);
@@ -99,7 +99,7 @@ void UtilsCommon::writeTextFile(QString file, QString text, bool append)
     {
         QTextStream stream(&theFile);
         stream.setCodec("UTF-8");
-        stream.setGenerateByteOrderMark(true);
+        //stream.setGenerateByteOrderMark(true);
         stream << text;
         theFile.close();
     }
