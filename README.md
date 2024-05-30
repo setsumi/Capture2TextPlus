@@ -1,5 +1,5 @@
 # Capture2Text
-Linux CLI port of Capture2Text v4.6.2
+Windows mod of Capture2Text v4.6.2
 
 sync from:https://sourceforge.net/projects/capture2text/
 
