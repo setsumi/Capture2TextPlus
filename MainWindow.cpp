@@ -1055,9 +1055,9 @@ void MainWindow::hotkeyPressed(int id)
         {
             Settings::setOcrTextOrientation("Vertical");
         }
-        else
+        else if(Settings::getOcrTextOrientation() == "Vertical")
         {
-            Settings::setOcrTextOrientation("Auto");
+            Settings::setOcrTextOrientation("Horizontal");
         }
 
         checkCurrentTextOrientationInMenu();
