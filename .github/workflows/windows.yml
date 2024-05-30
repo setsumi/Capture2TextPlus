@@ -58,6 +58,7 @@ jobs:
         shell: cmd
         run: |
           pip install conan
+          conan profile detect
           conan install .
 
       - name: msvc-build Capture2Text
