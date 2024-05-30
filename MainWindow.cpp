@@ -366,10 +366,10 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
         return;
     }
 
-    if(Settings::getDebugSaveCaptureImage())
-    {
-        image.save(getDebugImagePath("debug_capture.png"));
-    }
+    //if(Settings::getDebugSaveCaptureImage())
+    //{
+    //    image.save(getDebugImagePath("debug_capture.png"));
+    //}
 
     preProcess.setVerticalOrientation(isVertical);
     preProcess.setRemoveFurigana(UtilsLang::languageSupportsFurigana(Settings::getOcrLang()));
@@ -434,6 +434,14 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
+        if (Settings::getDebugSaveCaptureImage())
+        {
+            QImage image = UtilsImg::takeScreenshot(displayRect);
+            if (!image.isNull()) {
+                image.save(getDebugImagePath("debug_capture.png"));
+            }
+        }
+
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
@@ -493,10 +501,10 @@ void MainWindow::performTextLineCapture(QPoint pt)
         return;
     }
 
-    if(Settings::getDebugSaveCaptureImage())
-    {
-        image.save(getDebugImagePath("debug_capture.png"));
-    }
+    //if(Settings::getDebugSaveCaptureImage())
+    //{
+    //    image.save(getDebugImagePath("debug_capture.png"));
+    //}
 
     preProcess.setVerticalOrientation(isVertical);
     preProcess.setRemoveFurigana(UtilsLang::languageSupportsFurigana(Settings::getOcrLang()));
@@ -548,6 +556,14 @@ void MainWindow::performTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
+        if (Settings::getDebugSaveCaptureImage())
+        {
+            QImage image = UtilsImg::takeScreenshot(displayRect);
+            if (!image.isNull()) {
+                image.save(getDebugImagePath("debug_capture.png"));
+            }
+        }
+
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
@@ -588,10 +604,10 @@ void MainWindow::performBubbleCapture(QPoint pt)
         return;
     }
 
-    if(Settings::getDebugSaveCaptureImage())
-    {
-        image.save(getDebugImagePath("debug_capture.png"));
-    }
+    //if(Settings::getDebugSaveCaptureImage())
+    //{
+    //    image.save(getDebugImagePath("debug_capture.png"));
+    //}
 
     bool isVertical = false;
 
@@ -650,6 +666,14 @@ void MainWindow::performBubbleCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
+        if (Settings::getDebugSaveCaptureImage())
+        {
+            QImage image = UtilsImg::takeScreenshot(displayRect);
+            if (!image.isNull()) {
+                image.save(getDebugImagePath("debug_capture.png"));
+            }
+        }
+
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
