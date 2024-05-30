@@ -53,7 +53,7 @@
    <item row="0" column="1">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabHotkeys">
       <layout class="QGridLayout" name="gridLayout_11">
@@ -72,44 +72,12 @@
        <property name="verticalSpacing">
         <number>3</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelHotkeyCaptureBox">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start an OCR capture using a capture box that you may place over the text that you want to OCR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
+       <item row="12" column="0">
+        <widget class="QLabel" name="labelHotkeyHelp">
          <property name="text">
-          <string>Start OCR Capture:</string>
+          <string>Note: To disable a hotkey, select &quot;&lt;Unmapped&gt;&quot; from the drop-down list.</string>
          </property>
         </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyCaptureBox" native="true"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelHotkeyRecaptureLast">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OCR the text under the previously defined capture box.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Re-Capture Last:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyRecaptureLast" native="true"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelHotkeyTextLineCapture">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to auto-capture the line of text that is closest to the mouse pointer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Text Line Capture:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyTextLineCapture" native="true"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="labelHotkeyForwardTextLineCapture">
@@ -120,9 +88,6 @@
           <string>Forward Text Line Capture:</string>
          </property>
         </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyForwardTextLineCapture" native="true"/>
        </item>
        <item row="3" column="2">
         <spacer name="horizontalSpacer_7">
@@ -137,6 +102,16 @@
          </property>
         </spacer>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelHotkeyTextLineCapture">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to auto-capture the line of text that is closest to the mouse pointer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Text Line Capture:</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="labelHotkeyBubbleCapture">
          <property name="toolTip">
@@ -146,9 +121,6 @@
           <string>Bubble Capture:</string>
          </property>
         </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyBubbleCapture" native="true"/>
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="labelHotkeyLang1">
@@ -160,22 +132,6 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyLang1" native="true"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelHotkeyLang2">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set OCR language to Quick-Access Language Slot 2. See the OCR Language tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Quick-Access Language 2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyLang2" native="true"/>
-       </item>
        <item row="7" column="0">
         <widget class="QLabel" name="labelHotkeyLang3">
          <property name="toolTip">
@@ -185,9 +141,6 @@
           <string>Quick-Access Language 3:</string>
          </property>
         </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyLang3" native="true"/>
        </item>
        <item row="8" column="0">
         <widget class="QLabel" name="labelHotkeyTextOrientation">
@@ -199,9 +152,6 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyTextOrientation" native="true"/>
-       </item>
        <item row="9" column="0">
         <widget class="QLabel" name="labelHotkeyToggleWhitelist">
          <property name="toolTip">
@@ -212,23 +162,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyWhitelist" native="true"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="labelHotkeyToggleBlacklist">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable/disable the blacklist feature. You may specify the blacklist to use in the OCR 1 tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Toggle Blacklist:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="HotkeyWidget" name="widgetHotkeyBlacklist" native="true"/>
-       </item>
-       <item row="11" column="0">
+       <item row="13" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -241,12 +175,101 @@
          </property>
         </spacer>
        </item>
-       <item row="12" column="0">
+       <item row="14" column="0">
         <widget class="QLabel" name="labelHotkeysReset">
          <property name="text">
           <string>&lt;a href=&quot;none&quot;&gt;Reset to defaults&lt;/a&gt;</string>
          </property>
         </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelHotkeyToggleBlacklist">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable/disable the blacklist feature. You may specify the blacklist to use in the OCR 1 tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Toggle Blacklist:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelHotkeyCaptureBox">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start an OCR capture using a capture box that you may place over the text that you want to OCR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Start OCR Capture:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelHotkeyRecaptureLast">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OCR the text under the previously defined capture box.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Re-Capture Last:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelHotkeyLang2">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set OCR language to Quick-Access Language Slot 2. See the OCR Language tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Quick-Access Language 2:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyRecaptureLast" native="true"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyBubbleCapture" native="true"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyLang2" native="true"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyTextLineCapture" native="true"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyLang3" native="true"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyLang1" native="true"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyForwardTextLineCapture" native="true"/>
+       </item>
+       <item row="8" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyTextOrientation" native="true"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyCaptureBox" native="true"/>
+       </item>
+       <item row="9" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyWhitelist" native="true"/>
+       </item>
+       <item row="10" column="1">
+        <widget class="HotkeyWidget" name="widgetHotkeyBlacklist" native="true"/>
+       </item>
+       <item row="11" column="0">
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1526,7 +1549,7 @@ ${timestamp}&lt;br/&gt;
 ${translation}
 &lt;br/&gt;&lt;br/&gt;
 Example calling a Python script:&lt;br/&gt;
-python.exe &quot;C:\Scripts\test.py&quot; &quot;${capture}&quot; &quot;${translation}&quot;
+C:\Anaconda3\python.exe &quot;C:\Scripts\test.py&quot; &quot;${capture}&quot; &quot;${translation}&quot;
 &lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
@@ -2114,7 +2137,7 @@ python.exe &quot;C:\Scripts\test.py&quot; &quot;${capture}&quot; &quot;${transla
   <customwidget>
    <class>HotkeyWidget</class>
    <extends>QWidget</extends>
-   <header location="global">HotkeyWidget.h</header>
+   <header location="global">hotkeywidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
