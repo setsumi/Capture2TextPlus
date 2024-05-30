@@ -434,13 +434,18 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
-        if (Settings::getDebugSaveCaptureImage())
-        {
-            QImage image = UtilsImg::takeScreenshot(displayRect);
-            if (!image.isNull()) {
-                image.save(getDebugImagePath("debug_capture.png"));
-            }
-        }
+		if (Settings::getDebugSaveCaptureImage())
+		{
+			int border = (int)(qMin(displayRect.width(), displayRect.height()) / 8.2);
+			displayRect.setLeft(displayRect.left() - border);
+            displayRect.setTop(displayRect.top() - border);
+            displayRect.setWidth(displayRect.width() + border * 2);
+			displayRect.setHeight(displayRect.height() + border * 2);
+			QImage image = UtilsImg::takeScreenshot(displayRect);
+			if (!image.isNull()) {
+				image.save(getDebugImagePath("debug_capture.png"));
+			}
+		}
 
         autoCaptureBox.autoCapture(displayRect);
         ocrText = postProcess(ocrText);
