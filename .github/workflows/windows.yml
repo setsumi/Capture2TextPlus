@@ -36,13 +36,13 @@ jobs:
     # 步骤
     steps:
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       # 安装Qt
       - name: Install Qt
         # 使用外部action。这个action专门用来安装Qt
-        uses: jurplel/install-qt-action@v2.13.0
+        uses: jurplel/install-qt-action@v4
         with:
           # Version of Qt to install
           version: ${{ matrix.qt_ver }}
@@ -51,7 +51,7 @@ jobs:
           arch: ${{ matrix.qt_arch }}
           cached: 'false'
       # 拉取代码
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - name: set up prequisition
