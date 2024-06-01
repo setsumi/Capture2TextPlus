@@ -103,7 +103,6 @@ Options:
 bool CommandLine::process(QCoreApplication &app)
 {
     QCommandLineParser parser;
-#ifdef __WIN32
     parser.setApplicationDescription(
                 "Capture2Text may be used to OCR image files or part of the screen.\n"
                 "Examples:\n"
@@ -112,17 +111,6 @@ bool CommandLine::process(QCoreApplication &app)
                 "  Capture2Text_CLI.exe -i img1.png -i img2.jpg -o result.txt\n"
                 "  Capture2Text_CLI.exe -l Japanese -f \"C:\\Temp\\image_files.txt\"\n"
                 "  Capture2Text_CLI.exe --show-languages");
-#else
-    parser.setApplicationDescription(
-        "Capture2Text may be used to OCR image files or part of the screen.\n"
-        "Examples:\n"
-        "  capture2text --screen-rect \"400 200 600 300\"\n"
-        "  capture2text --vertical -l \"Chinese - Simplified\" -i img1.png\n"
-        "  capture2text -i img1.png -i img2.jpg -o result.txt\n"
-        "  capture2text -l Japanese -f \"C:\\Temp\\image_files.txt\"\n"
-        "  capture2text --show-languages");
-
-#endif
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -314,7 +302,7 @@ bool CommandLine::process(QCoreApplication &app)
     imagePreprocessor.setScaleFactor(scaleFactor);
 
     outputFilePath = parser.value(outputFileOption);
-        bool outputFileAppend = parser.isSet(fileAppendOption);
+    bool outputFileAppend = parser.isSet(fileAppendOption);
 
     // If output file specified, open/create it here
     if(outputFilePath.size() > 0)
@@ -585,7 +573,7 @@ void CommandLine::outputToFile(QString ocrText)
 {
     QTextStream stream(&outputFile);
     stream.setCodec("UTF-8");
-    stream.setGenerateByteOrderMark(true);
+    //stream.setGenerateByteOrderMark(true);
     stream << ocrText;
     stream.flush();
 }
