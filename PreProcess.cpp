@@ -405,6 +405,7 @@ PIX *PreProcess::eraseFurigana(PIX *pixs)
     return denoisePixs;
 }
 
+
 // Standard pre-process for OCR.
 // Be sure to call pixDestroy() on the returned PIX pointer to avoid memory leak.
 PIX *PreProcess::processImage(PIX *pixs, bool performDeskew, bool trim)
@@ -523,6 +524,94 @@ PIX *PreProcess::processImage(PIX *pixs, bool performDeskew, bool trim)
 }
 
 
+// For the given column (x), erase everthing below the given row (y)
+bool PreProcess::eraseLineBelowPoint(PIX *pixs, int x, int y)
+{
+    int status = LEPT_ERROR;
+    BOX box;
+
+    box.x = x;
+    box.y = y;
+    box.w = 1;
+    box.h = pixs->h - y;
+
+    status = pixClearInRect(pixs, &box);
+
+    return (status == LEPT_OK) ;
+}
+
+
+// For the given row (y), erase everthing to the right of the given column (x)
+bool PreProcess::eraseLineToRightOfPoint(PIX *pixs, int x, int y)
+{
+    int status = LEPT_ERROR;
+    BOX box;
+
+    box.x = x;
+    box.y = y;
+    box.w = pixs->w - x;
+    box.h = 1;
+
+    status = pixClearInRect(pixs, &box);
+
+    return (status == LEPT_OK) ;
+}
+
+
+// Erase everything below the pixels touching the border and also below "belowY".
+// pixs is an in/out parameter.
+void PreProcess::eraseConnectingBorderPixelsBelow(PIX *pixs, int belowY)
+{
+    PIX *borderConnPixs = pixExtractBorderConnComps(pixs, 8);
+    debugImg("onlyBorderConnPixs.png", borderConnPixs);
+
+    for (unsigned int x = 0; x < borderConnPixs->w; x++)
+    {
+        for (unsigned int y = belowY; y < borderConnPixs->h; y++)
+        {
+            bool isBlack = BoundingTextRect::isBlack(borderConnPixs, x, y);
+
+            if(isBlack)
+            {
+                eraseLineBelowPoint(pixs, x, y);
+                break;
+            }
+        }
+    }
+
+    pixDestroy(&borderConnPixs);
+
+    debugImg("erasePixelsOutsideOfPixelsConnectedToBorder.png", pixs);
+}
+
+
+// Erase everything to the right of the pixels touching the border and also to the right of "rightOfX".
+// pixs is an in/out parameter.
+void PreProcess::eraseConnectingBorderPixelsRight(PIX *pixs, int rightOfX)
+{
+    PIX *borderConnPixs = pixExtractBorderConnComps(pixs, 8);
+    debugImg("onlyBorderConnPixs.png", borderConnPixs);
+
+    for (unsigned int y = 0; y < borderConnPixs->h; y++)
+    {
+        for (unsigned int x = rightOfX; x < borderConnPixs->w; x++)
+        {
+            bool isBlack = BoundingTextRect::isBlack(borderConnPixs, x, y);
+
+            if(isBlack)
+            {
+                eraseLineToRightOfPoint(pixs, x, y);
+                break;
+            }
+        }
+    }
+
+    pixDestroy(&borderConnPixs);
+
+    debugImg("erasePixelsOutsideOfPixelsConnectedToBorder.png", pixs);
+}
+
+
 // Extract the text block closest to the provided point.
 // Be sure to call pixDestroy() on the returned PIX pointer to avoid memory leak.
 PIX *PreProcess::extractTextBlock(PIX *pixs, int pt_x, int pt_y, int lookahead, int lookbehind, int searchRadius)
@@ -596,6 +685,17 @@ PIX *PreProcess::extractTextBlock(PIX *pixs, int pt_x, int pt_y, int lookahead, 
         return nullptr;
     }
 
+    if(verticalText)
+    {
+        // Erase pixels below the pixels that are connected to the border and below the click point
+        eraseConnectingBorderPixelsBelow(binarizePixs, pt_y * scaleFactor);
+    }
+    else
+    {
+        // Erase pixels to the right of the pixels that are connected to the border and to the right of the click point
+        eraseConnectingBorderPixelsRight(binarizePixs, pt_x * scaleFactor);
+    }
+
     // Remove black pixels connected to the border.
     // This eliminates annoying things like text bubbles in manga.
     PIX *connCompsPixs = pixRemoveBorderConnComps(binarizePixs, 8);
@@ -606,7 +706,7 @@ PIX *PreProcess::extractTextBlock(PIX *pixs, int pt_x, int pt_y, int lookahead, 
         return nullptr;
     }
 
-    debugImg("connCompsPixs.png", connCompsPixs);
+    debugImg("removePixelsConnectedToBorder.png", connCompsPixs);
 
     // Remove noise
     PIX *denoisePixs = removeNoise(connCompsPixs);

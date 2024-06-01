@@ -52,6 +52,11 @@ QString PostProcess::postProcessOcrText(QString text)
     text.replace("ﬁ", "fi");
     text.replace("ﬂ", "fl");
 
+    // Replace fancy Unicode quotes
+    text.replace("’", "'");
+    text.replace("“", "\"");
+    text.replace("”", "\"");
+
     for(auto item : replacementList)
     {
         QString to(item.to);
