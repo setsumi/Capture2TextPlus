@@ -8,7 +8,7 @@ libcurl/7.80.0
 libdeflate/1.9
 libiconv/1.16
 libjpeg/9e
-libpng/1.6.37
+libpng/1.6.40
 libtiff/4.3.0
 libwebp/1.2.1
 openjpeg/2.4.0
