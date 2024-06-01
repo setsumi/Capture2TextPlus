@@ -57,7 +57,8 @@ jobs:
       - name: set up prequisition
         shell: cmd
         run: |
-          pip install --force-reinstall -v "conan==1.64.1"
+          pip install conan
+          conan profile detect
           conan install . --build=missing
 
       - name: msvc-build Capture2Text
