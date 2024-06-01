@@ -1,5 +1,5 @@
-# Capture2Text
-Windows mod of Capture2Text
+# Capture2TextPlus
+Mod of Capture2Text
 
 sync from: https://sourceforge.net/projects/capture2text/
 
