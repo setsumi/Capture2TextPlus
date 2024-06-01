@@ -6,7 +6,7 @@ jbig/20160605
 libarchive/3.7.2
 libcurl/8.6.0
 libdeflate/1.19
-libiconv/1.16
+libiconv/1.17
 libjpeg/9e
 libpng/1.6.40
 libtiff/4.6.0
