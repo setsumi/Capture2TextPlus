@@ -79,7 +79,7 @@
       <item row="3" column="1">
        <widget class="QLabel" name="labelHomePageLink">
         <property name="text">
-         <string>&lt;a href=&quot;none&quot;&gt;https://github.com/setsumi/Capture2Text/&lt;/a&gt;</string>
+         <string>&lt;a href=&quot;none&quot;&gt;https://github.com/setsumi/Capture2TextPlus/&lt;/a&gt;</string>
         </property>
        </widget>
       </item>
@@ -93,7 +93,7 @@
       <item row="4" column="1">
        <widget class="QLabel" name="label_8">
         <property name="text">
-         <string>&lt;a href=&quot;none&quot;&gt;https://github.com/setsumi/Capture2Text/issues/&lt;/a&gt;</string>
+         <string>&lt;a href=&quot;none&quot;&gt;https://github.com/setsumi/Capture2TextPlus/issues/&lt;/a&gt;</string>
         </property>
        </widget>
       </item>
