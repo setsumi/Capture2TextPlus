@@ -7,7 +7,7 @@ libarchive/3.5.2
 libcurl/7.80.0
 libdeflate/1.9
 libiconv/1.16
-libjpeg/9d
+libjpeg/9e
 libpng/1.6.37
 libtiff/4.3.0
 libwebp/1.2.1
