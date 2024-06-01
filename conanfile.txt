@@ -1,6 +1,6 @@
 [requires]
 tesseract/5.0.0
-leptonica/1.84.1
+leptonica/1.84.0
 giflib/5.2.1
 jbig/20160605
 libarchive/3.5.2
