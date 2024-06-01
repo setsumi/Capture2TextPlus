@@ -3,8 +3,8 @@ tesseract/5.3.3
 leptonica/1.83.1
 giflib/5.2.1
 jbig/20160605
-libarchive/3.5.2
-libcurl/7.80.0
+libarchive/3.7.2
+libcurl/8.6.0
 libdeflate/1.19
 libiconv/1.16
 libjpeg/9e
