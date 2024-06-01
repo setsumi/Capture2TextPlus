@@ -21,6 +21,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #include "KeyboardHook.h"
 #include "MouseHook.h"
 
+
 CaptureBox::CaptureBox()
     : QWidget(0, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Dialog | Qt::Tool),
       backgroundColor(QColor(255, 0, 0, 64)),
@@ -40,7 +41,7 @@ CaptureBox::CaptureBox()
     connect(&timerUpdateCaptureMode, &QTimer::timeout, this, &CaptureBox::updateCaptureMode);
     connect(&autoCaptureTimer, &QTimer::timeout, this, &CaptureBox::autoCaptureTimeout);
     connect(&moveTimer, &QTimer::timeout, this, &CaptureBox::moveTimeout);
-    //connect(&KeyboardHook::getInstance(), &KeyboardHook::keyPressed, this, &CaptureBox::hotkeyPressed);
+    connect(&KeyboardHook::getInstance(), &KeyboardHook::keyPressed, this, &CaptureBox::hotkeyPressed);
     connect(&MouseHook::getInstance(), &MouseHook::buttonPressed, this, &CaptureBox::hotkeyPressed);
 }
 
@@ -219,8 +220,7 @@ void CaptureBox::updateCaptureMode()
             y2 = y1 + 1;
         }
 
-        //tricks,enlarge the rectangle,the mouse cursor will be inside the box.so the mouse button click can be invoked.
-        setFixedSize(x2 - x1+1, y2 - y1+1);
+        setFixedSize(x2 - x1, y2 - y1);
         move(x1, y1);
 
         emit moved();
@@ -277,12 +277,4 @@ void CaptureBox::paintEvent(QPaintEvent *)
         painter.setPen(pen);
         painter.drawRect(0, 0, width() - 1, height() - 1);
     }
-}
-
-void CaptureBox::mousePressEvent(QMouseEvent *event){
-  if (event->button() == Qt::LeftButton) {
-    hotkeyPressed(MouseHook::LEFT_MOUSE_DOWN);
-  } else if (event->button() == Qt::RightButton) {
-    hotkeyPressed(MouseHook::RIGHT_MOUSE_DOWN);
-  }
 }
