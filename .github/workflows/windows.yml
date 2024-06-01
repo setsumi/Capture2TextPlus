@@ -58,7 +58,7 @@ jobs:
         shell: cmd
         run: |
           pip install --force-reinstall -v "conan==1.64.1"
-          conan install . -s compiler.cppstd=17 --build=missing
+          conan install . --build=missing
 
       - name: msvc-build Capture2Text
         id: build
