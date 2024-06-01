@@ -101,13 +101,12 @@ jobs:
           asset_name: ${{ steps.package.outputs.packageName }}.zip
           tag: prerelease-${{steps.vars.outputs.release_date}}
           overwrite: true 
-          release_name: Ubuntu-Windows-${{ github.ref_name }}.${{ steps.vars.outputs.sha_short }} built on ${{steps.vars.outputs.release_date}}  ${{steps.vars.outputs.release_time_clock}}  
+          release_name: Windows-${{ github.ref_name }}.${{ steps.vars.outputs.sha_short }} built on ${{steps.vars.outputs.release_date}}  ${{steps.vars.outputs.release_time_clock}}  
           prerelease: true
           body: |
-            release on date:      ${{steps.vars.outputs.release_date}} time: ${{steps.vars.outputs.release_time_clock}}  
-            branch:               ${{ github.ref_name }}
-            commit:               ${{ steps.vars.outputs.sha_short }} 
-            Qt version:           ${{ matrix.qt_ver }} ${{ matrix.qt_arch }}
-            Windows   built with: MSVC-64 Visual studio 2019, with English OCR. If you want other `Language`, build by yourself following steps.
+            Release on date: ${{steps.vars.outputs.release_date}} Time: ${{steps.vars.outputs.release_time_clock}}  
+            Branch:          ${{ github.ref_name }}
+            Commit:          ${{ steps.vars.outputs.sha_short }} 
+            Qt version:      ${{ matrix.qt_ver }} ${{ matrix.qt_arch }}
+            Built with:      MSVC-64 Visual studio 2019, with English OCR. If you want other `Language`, build by yourself following steps.
 
-            This is a prerelease version, auto build by github action. Use on your own risk :-)
