@@ -41,10 +41,10 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::on_labelHomePageLink_linkActivated(const QString &)
 {
-    QDesktopServices::openUrl(QUrl("http://capture2text.sourceforge.net"));
+    QDesktopServices::openUrl(QUrl("https://github.com/setsumi/Capture2TextPlus/"));
 }
 
 void AboutDialog::on_label_8_linkActivated(const QString &)
 {
-    QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/capture2text/tickets/"));
+    QDesktopServices::openUrl(QUrl("https://github.com/setsumi/Capture2TextPlus/issues/"));
 }
