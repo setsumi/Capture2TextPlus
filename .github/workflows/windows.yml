@@ -59,7 +59,7 @@ jobs:
         run: |
           pip install conan
           conan profile detect
-          conan install . -s cppstd=17 --build=missing
+          conan install . -s compiler.cppstd=17 --build=missing
 
       - name: msvc-build Capture2Text
         id: build
