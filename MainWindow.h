@@ -51,9 +51,15 @@ private:
     const int minOcrWidth = 3;
     const int minOcrHeight = 3;
 
+    void createCaptureBox();
+    void createAutoCaptureBox();
+    void createPreviewBox();
+    void createInfoBoxAndShow(QString text);
     void captureBoxCaptured();
     void startCaptureBox();
     void endCaptureBox();
+    void setTextOrientation(QString orientation);
+    void updateTrayIconToolTip();
     void createTrayMenu();
     void populateOcrLangMap();
     void showDocumentation();
@@ -104,10 +110,10 @@ private:
         ENABLE_BLACKLIST,
     };
 
-    CaptureBox captureBox;
-    CaptureBox autoCaptureBox;
-    Preview previewBox;
-    Preview infoBox;
+    CaptureBox *captureBox;
+    CaptureBox *autoCaptureBox;
+    Preview *previewBox;
+    Preview *infoBox;
     OcrEngine *ocrEngine;
     PreProcess preProcess;
     QSystemTrayIcon *trayIcon;

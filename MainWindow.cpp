@@ -73,26 +73,16 @@ MainWindow::MainWindow(bool portable)
         }
     }
 
-    captureBox.setBackgroundColor(Settings::getCaptureBoxBackgroundColor());
-    captureBox.setBorderColor(Settings::getCaptureBoxBorderColor());
-    captureBox.setUseBackgroundColor(true);
-    connect(&captureBox, &CaptureBox::captured, this, &MainWindow::captureBoxCaptured);
-    connect(&captureBox, &CaptureBox::stoppedMoving, this, &MainWindow::captureBoxStoppedMoving);
-    connect(&captureBox, &CaptureBox::cancel, this, &MainWindow::captureBoxCancel);
-    connect(&captureBox, &CaptureBox::moved, this, &MainWindow::captureBoxMoved);
+    captureBox = nullptr;
+    createCaptureBox();
 
-    autoCaptureBox.setBorderColor(Settings::getCaptureBoxBorderColor());
-    autoCaptureBox.setUseBackgroundColor(false);
+    autoCaptureBox = nullptr;
+    createAutoCaptureBox();
 
-    previewBox.setBackgroundColor(Settings::getPreviewBackgroundColor());
-    previewBox.setBorderColor(Settings::getPreviewBorderColor());
-    previewBox.setTextColor(Settings::getPreviewTextColor());
-    previewBox.setTextFont(Settings::getPreviewTextFont());
+    previewBox = nullptr;
+    createPreviewBox();
 
-    infoBox.setBackgroundColor(Settings::getPreviewBackgroundColor());
-    infoBox.setBorderColor(Settings::getPreviewBorderColor());
-    infoBox.setTextColor(Settings::getPreviewTextColor());
-    infoBox.setTextFont(Settings::getPreviewTextFont());
+    infoBox = nullptr;
 
     connect(&watcherPreview, &QFutureWatcher<QString>::finished, this, &MainWindow::ocrPreviewComplete);
 
@@ -135,6 +125,73 @@ MainWindow::~MainWindow()
     delete ocrEngine;
 }
 
+// Note: we create a new instance of capture box each time it triggered. This is done
+// to prevent the capture box from randomly and permanently entering a state where it
+// would appear under other windows (especially waking up from sleep).
+// This note also applies for autoCaptureBox, previewBox, and infoBox.
+void MainWindow::createCaptureBox()
+{
+    if(captureBox != nullptr)
+    {
+        delete captureBox;
+    }
+
+    captureBox = new CaptureBox();
+
+    captureBox->setBackgroundColor(Settings::getCaptureBoxBackgroundColor());
+    captureBox->setBorderColor(Settings::getCaptureBoxBorderColor());
+    captureBox->setUseBackgroundColor(true);
+    connect(captureBox, &CaptureBox::captured, this, &MainWindow::captureBoxCaptured);
+    connect(captureBox, &CaptureBox::stoppedMoving, this, &MainWindow::captureBoxStoppedMoving);
+    connect(captureBox, &CaptureBox::cancel, this, &MainWindow::captureBoxCancel);
+    connect(captureBox, &CaptureBox::moved, this, &MainWindow::captureBoxMoved);
+}
+
+void MainWindow::createAutoCaptureBox()
+{
+    if(autoCaptureBox != nullptr)
+    {
+        delete autoCaptureBox;
+    }
+
+    autoCaptureBox = new CaptureBox();
+
+    autoCaptureBox->setBorderColor(Settings::getCaptureBoxBorderColor());
+    autoCaptureBox->setUseBackgroundColor(false);
+}
+
+void MainWindow::createPreviewBox()
+{
+    if(previewBox != nullptr)
+    {
+        delete previewBox;
+    }
+
+    previewBox = new Preview();
+
+    previewBox->setBackgroundColor(Settings::getPreviewBackgroundColor());
+    previewBox->setBorderColor(Settings::getPreviewBorderColor());
+    previewBox->setTextColor(Settings::getPreviewTextColor());
+    previewBox->setTextFont(Settings::getPreviewTextFont());
+}
+
+void MainWindow::createInfoBoxAndShow(QString text)
+{
+    if(infoBox != nullptr)
+    {
+        delete infoBox;
+    }
+
+    infoBox = new Preview();
+
+    infoBox->setBackgroundColor(Settings::getPreviewBackgroundColor());
+    infoBox->setBorderColor(Settings::getPreviewBorderColor());
+    infoBox->setTextColor(Settings::getPreviewTextColor());
+    infoBox->setTextFont(Settings::getPreviewTextFont());
+
+    infoBox->showInfo(text);
+}
+
 void MainWindow::captureBoxCaptured()
 {
     endCaptureBox();
@@ -144,20 +201,24 @@ void MainWindow::startCaptureBox()
 {
     if(Settings::getPreviewEnabled())
     {
-        previewBox.move(QPoint(0, 0));
-        previewBox.show();
-        previewBox.raise();
+        createPreviewBox();
+        previewBox->move(QPoint(0, 0));
+        previewBox->show();
+        previewBox->raise();
     }
-    captureBox.startCaptureMode();
+
+    createCaptureBox();
+
+    captureBox->startCaptureMode();
 }
 
 void MainWindow::endCaptureBox()
 {
     captureTimestamp = QDateTime::currentDateTime();
-    previewBox.hideAndReset();
-    captureBox.endCaptureMode();
+    previewBox->hideAndReset();
+    captureBox->endCaptureMode();
 
-    QRect captureRect = captureBox.getCaptureRect();
+    QRect captureRect = captureBox->getCaptureRect();
     if(captureRect.width() <= minOcrWidth || captureRect.height() <= minOcrHeight)
     {
         return;
@@ -182,7 +243,7 @@ bool MainWindow::isOrientationVertical()
     {
         if(savedTextOrientation == "Auto")
         {
-            QRect rect = captureBox.getCaptureRect();
+            QRect rect = captureBox->getCaptureRect();
             double aspectRatio = rect.width() / (double)rect.height();
 
             if(aspectRatio < 2.0)
@@ -208,23 +269,23 @@ bool MainWindow::isOrientationVertical()
 QString MainWindow::ocrCaptureBoxArea()
 {
     bool previewEnabled = Settings::getPreviewEnabled();
-    previewEnabled &= !previewBox.isHidden();
+    previewEnabled &= !previewBox->isHidden();
 
     if(previewEnabled)
     {
-        QMetaObject::invokeMethod(&captureBox, "turnOffBackground", Qt::BlockingQueuedConnection);
+        QMetaObject::invokeMethod(captureBox, "turnOffBackground", Qt::BlockingQueuedConnection);
     }
 
-    QRect captureRect = captureBox.getCaptureRect();
+    QRect captureRect = captureBox->getCaptureRect();
     QImage image = UtilsImg::takeScreenshot(captureRect);
 
     if(previewEnabled)
     {
-        QMetaObject::invokeMethod(&captureBox, "turnOnBackground", Qt::BlockingQueuedConnection);
+        QMetaObject::invokeMethod(captureBox, "turnOnBackground", Qt::BlockingQueuedConnection);
 
         if(pendingPreviewRequest)
         {
-            return previewBox.getText();
+            return previewBox->getText();
         }
     }
 
@@ -233,7 +294,7 @@ QString MainWindow::ocrCaptureBoxArea()
         return "<Error>";
     }
 
-    if(!captureBox.isVisible() && Settings::getDebugSaveCaptureImage())
+    if(!captureBox->isVisible() && Settings::getDebugSaveCaptureImage())
     {
         image.save(getDebugImagePath("debug_capture.png"));
     }
@@ -254,10 +315,10 @@ QString MainWindow::ocrCaptureBoxArea()
     if(previewEnabled && pendingPreviewRequest)
     {
         pixDestroy(&pixs);
-        return previewBox.getText();
+        return previewBox->getText();
     }
 
-    if(!captureBox.isVisible() && Settings::getDebugSaveEnhancedImage())
+    if(!captureBox->isVisible() && Settings::getDebugSaveEnhancedImage())
     {
         QString savePath = getDebugImagePath("debug_enhanced.png");
         QByteArray byteArray = savePath.toLocal8Bit();
@@ -279,7 +340,7 @@ QString MainWindow::ocrCaptureBoxArea()
 
     if(previewEnabled && pendingPreviewRequest)
     {
-        return previewBox.getText();
+        return previewBox->getText();
     }
 
     return ocrText;
@@ -447,7 +508,8 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
             }
         }
 
-        autoCaptureBox.autoCapture(displayRect);
+        createAutoCaptureBox();
+        autoCaptureBox->autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
     }
@@ -574,7 +636,8 @@ void MainWindow::performTextLineCapture(QPoint pt)
 			}
 		}
 
-        autoCaptureBox.autoCapture(displayRect);
+        createAutoCaptureBox();
+        autoCaptureBox->autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
     }
@@ -689,7 +752,8 @@ void MainWindow::performBubbleCapture(QPoint pt)
             }
         }
 
-        autoCaptureBox.autoCapture(displayRect);
+        createAutoCaptureBox();
+        autoCaptureBox->autoCapture(displayRect);
         ocrText = postProcess(ocrText);
         outputOcrText(ocrText);
     }
@@ -729,24 +793,9 @@ void MainWindow::settingsAccepted()
 {
     registerHotkeys();
 
-    captureBox.setBackgroundColor(Settings::getCaptureBoxBackgroundColor());
-    captureBox.setBorderColor(Settings::getCaptureBoxBorderColor());
-
-    autoCaptureBox.setBorderColor(Settings::getCaptureBoxBorderColor());
-
     setOcrLang(Settings::getOcrLang());
 
     checkCurrentTextOrientationInMenu();
-
-    previewBox.setBackgroundColor(Settings::getPreviewBackgroundColor());
-    previewBox.setBorderColor(Settings::getPreviewBorderColor());
-    previewBox.setTextColor(Settings::getPreviewTextColor());
-    previewBox.setTextFont(Settings::getPreviewTextFont());
-
-    infoBox.setBackgroundColor(Settings::getPreviewBackgroundColor());
-    infoBox.setBorderColor(Settings::getPreviewBorderColor());
-    infoBox.setTextColor(Settings::getPreviewTextColor());
-    infoBox.setTextFont(Settings::getPreviewTextFont());
 
     actionSaveToClipboard->setChecked(Settings::getOutputClipboard());
     actionShowPopupWindow->setChecked(Settings::getOutputShowPopup());
@@ -762,20 +811,22 @@ void MainWindow::selectOutputPopupFromMenu()
     Settings::setOutputShowPopup(actionShowPopupWindow->isChecked());
 }
 
-void MainWindow::setOcrLang(QString lang) {
-  auto action = actionGroupOcrLang->checkedAction();
-  if (action)
-    action->setChecked(false);
+void MainWindow::setOcrLang(QString lang)
+{
+    actionGroupOcrLang->checkedAction()->setChecked(false);
 
-  for (auto action : actionGroupOcrLang->actions()) {
-    if (action->text() == lang) {
-      action->setChecked(true);
-      break;
+    for(auto action : actionGroupOcrLang->actions())
+    {
+        if(action->text() == lang)
+        {
+            action->setChecked(true);
+            break;
+        }
     }
-  }
 
-  Settings::setOcrLang(lang);
-  QtConcurrent::run(ocrEngine, &OcrEngine::setLang, lang);
+    Settings::setOcrLang(lang);
+    updateTrayIconToolTip();
+    QtConcurrent::run(ocrEngine, &OcrEngine::setLang, lang);
 }
 
 void MainWindow::captureBoxMoved()
@@ -789,32 +840,32 @@ void MainWindow::captureBoxMoved()
 
     QString savedPreviewPos = Settings::getPreviewPosition();
     QPoint pt(0, 0);
-    int previewBoxHeight = previewBox.getBoxHeight();
+    int previewBoxHeight = previewBox->getBoxHeight();
 
     if(savedPreviewPos == "Dynamic - Top Left")
     {
-        pt = captureBox.getCaptureRect().topLeft();
+        pt = captureBox->getCaptureRect().topLeft();
         pt -= QPoint(0, previewBoxHeight + gap);
     }
     else if(savedPreviewPos == "Dynamic - Bottom Left")
     {
-        pt = captureBox.getCaptureRect().bottomLeft();
+        pt = captureBox->getCaptureRect().bottomLeft();
         pt += QPoint(0, gap);
     }
     else if(savedPreviewPos == "Dynamic - Right Edge Top")
     {
-        pt = captureBox.getCaptureRect().topRight();
+        pt = captureBox->getCaptureRect().topRight();
         pt += QPoint(gap, 0);
     }
     else if(savedPreviewPos == "Dynamic - Right Edge Bottom")
     {
-        pt = captureBox.getCaptureRect().bottomRight();
+        pt = captureBox->getCaptureRect().bottomRight();
         pt += QPoint(gap, -previewBoxHeight);
     }
     else if(savedPreviewPos == "Dynamic - Right Edge Center")
     {
-        pt = QPoint(captureBox.getCaptureRect().right() + gap,
-                    captureBox.getCaptureRect().center().y() - previewBoxHeight / 2);
+        pt = QPoint(captureBox->getCaptureRect().right() + gap,
+                    captureBox->getCaptureRect().center().y() - previewBoxHeight / 2);
     }
     else if(savedPreviewPos == "Fixed - Bottom Left")
     {
@@ -826,12 +877,12 @@ void MainWindow::captureBoxMoved()
         pt = QApplication::desktop()->availableGeometry().topLeft();
     }
 
-    previewBox.move(pt);
+    previewBox->move(pt);
 }
 
 void MainWindow::ocrPreviewComplete()
 {
-    if(!Settings::getPreviewEnabled() || previewBox.isHidden())
+    if(!Settings::getPreviewEnabled() || previewBox->isHidden())
     {
         return;
     }
@@ -839,8 +890,8 @@ void MainWindow::ocrPreviewComplete()
     QString ocrText = watcherPreview.result();
     ocrText = postProcess(ocrText, true);
 
-    previewBox.setText(ocrText);
-    previewBox.update();
+    previewBox->setText(ocrText);
+    previewBox->update();
 
     if(pendingPreviewRequest)
     {
@@ -858,7 +909,7 @@ void MainWindow::captureBoxStoppedMoving()
         return;
     }
 
-    QRect captureRect = captureBox.getCaptureRect();
+    QRect captureRect = captureBox->getCaptureRect();
     if(captureRect.width() <= minOcrWidth || captureRect.height() <= minOcrHeight)
     {
         return;
@@ -882,7 +933,7 @@ void MainWindow::captureBoxStoppedMoving()
 
 void MainWindow::captureBoxCancel()
 {
-    previewBox.hideAndReset();
+    previewBox->hideAndReset();
 }
 
 void MainWindow::selectLangFromMenu()
@@ -894,17 +945,20 @@ void MainWindow::selectLangFromMenu()
 
 void MainWindow::selectTextOrientationAutoFromMenu()
 {
-    Settings::setOcrTextOrientation("Auto");
+    setTextOrientation("Auto");
+    updateTrayIconToolTip();
 }
 
 void MainWindow::selectTextOrientationHorizontalFromMenu()
 {
-    Settings::setOcrTextOrientation("Horizontal");
+    setTextOrientation("Horizontal");
+    updateTrayIconToolTip();
 }
 
 void MainWindow::selectTextOrientationVerticalAutoFromMenu()
 {
-    Settings::setOcrTextOrientation("Vertical");
+    setTextOrientation("Vertical");
+    updateTrayIconToolTip();
 }
 
 QString MainWindow::postProcess(QString text, bool forceRemoveLineBreaks)
@@ -918,7 +972,7 @@ QString MainWindow::postProcess(QString text, bool forceRemoveLineBreaks)
     if(Settings::getDebugPrependCoords())
     {
         int x1, y1, x2, y2;
-        captureBox.getCaptureRect().getCoords(&x1, &y1, &x2, &y2);
+        captureBox->getCaptureRect().getCoords(&x1, &y1, &x2, &y2);
         text = QString("(%1 %2 %3 %4) ").arg(x1).arg(y1).arg(x2).arg(y2) + text;
     }
 
@@ -1029,7 +1083,7 @@ void MainWindow::hotkeyPressed(int id)
     }
     else if(id == CAPTURE_BOX)
     {
-        if(captureBox.isVisible())
+        if(captureBox->isVisible())
         {
             endCaptureBox();
         }
@@ -1049,11 +1103,11 @@ void MainWindow::hotkeyPressed(int id)
         if(OcrEngine::isLangInstalled(lang))
         {
             setOcrLang(lang);
-            infoBox.showInfo(lang);
+            createInfoBoxAndShow(lang);
         }
         else
         {
-            infoBox.showInfo(lang + " is not installed!");
+            createInfoBoxAndShow(lang + " is not installed!");
         }
     }
     else if(id == LANG_2)
@@ -1063,11 +1117,11 @@ void MainWindow::hotkeyPressed(int id)
         if(OcrEngine::isLangInstalled(lang))
         {
             setOcrLang(lang);
-            infoBox.showInfo(lang);
+            createInfoBoxAndShow(lang);
         }
         else
         {
-            infoBox.showInfo(lang + " is not installed!");
+            createInfoBoxAndShow(lang + " is not installed!");
         }
     }
     else if(id == LANG_3)
@@ -1077,30 +1131,30 @@ void MainWindow::hotkeyPressed(int id)
         if(OcrEngine::isLangInstalled(lang))
         {
             setOcrLang(lang);
-            infoBox.showInfo(lang);
+            createInfoBoxAndShow(lang);
         }
         else
         {
-            infoBox.showInfo(lang + " is not installed!");
+            createInfoBoxAndShow(lang + " is not installed!");
         }
     }
     else if(id == TEXT_ORIENTATION)
     {
         if(Settings::getOcrTextOrientation() == "Auto")
         {
-            Settings::setOcrTextOrientation("Horizontal");
+            setTextOrientation("Horizontal");
         }
         else if(Settings::getOcrTextOrientation() == "Horizontal")
         {
-            Settings::setOcrTextOrientation("Vertical");
+            setTextOrientation("Vertical");
         }
         else if(Settings::getOcrTextOrientation() == "Vertical")
         {
-            Settings::setOcrTextOrientation("Horizontal");
+            setTextOrientation("Horizontal");
         }
 
         checkCurrentTextOrientationInMenu();
-        infoBox.showInfo(Settings::getOcrTextOrientation());
+        createInfoBoxAndShow(Settings::getOcrTextOrientation());
     }
     else if(id == BUBBLE_CAPTURE)
     {
@@ -1114,13 +1168,13 @@ void MainWindow::hotkeyPressed(int id)
     {
         bool enabled = !Settings::getOcrEnableWhitelist();
         Settings::setOcrEnableWhitelist(enabled);
-        infoBox.showInfo(enabled ? "Whitelist Enabled": "Whitelist Disabled");
+        createInfoBoxAndShow(enabled ? "Whitelist Enabled": "Whitelist Disabled");
     }
     else if(id == ENABLE_BLACKLIST)
     {
         bool enabled = !Settings::getOcrEnableBlacklist();
         Settings::setOcrEnableBlacklist(enabled);
-        infoBox.showInfo(enabled ? "Blacklist Enabled": "Blacklist Disabled");
+        createInfoBoxAndShow(enabled ? "Blacklist Enabled": "Blacklist Disabled");
     }
 }
 
@@ -1131,6 +1185,29 @@ void MainWindow::checkCurrentTextOrientationInMenu()
         action->setChecked(action->text() == Settings::getOcrTextOrientation());
     }
 }
+
+void MainWindow::setTextOrientation(QString orientation)
+{
+    Settings::setOcrTextOrientation(orientation);
+    updateTrayIconToolTip();
+}
+
+void MainWindow::updateTrayIconToolTip()
+{
+    QString curLang = Settings::getOcrLang();
+    QString toolTipText = "Capture2Text - " + curLang;
+
+    if(UtilsLang::languageSupportsVerticalOrientation(curLang))
+    {
+        toolTipText += " - " + Settings::getOcrTextOrientation();
+    }
+
+    if(trayIcon != nullptr)
+    {
+        trayIcon->setToolTip(toolTipText);
+    }
+}
+
 
 void MainWindow::createTrayMenu()
 {
@@ -1261,5 +1338,8 @@ void MainWindow::createTrayMenu()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":/img/img/Logo.png"));
     trayIcon->setContextMenu(menuTrayIcon);
+    updateTrayIconToolTip();
     trayIcon->show();
 }
+
+
