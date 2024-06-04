@@ -497,7 +497,7 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
     {
         if (Settings::getDebugSaveCaptureImage())
         {
-            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
             displayRect.setLeft(displayRect.left() - border);
             displayRect.setTop(displayRect.top() - border);
             displayRect.setWidth(displayRect.width() + border);
@@ -625,7 +625,7 @@ void MainWindow::performTextLineCapture(QPoint pt)
     {
 		if (Settings::getDebugSaveCaptureImage())
 		{
-			int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
 			displayRect.setLeft(displayRect.left() - border);
 			displayRect.setTop(displayRect.top() - border);
 			displayRect.setWidth(displayRect.width() + border);
@@ -741,7 +741,7 @@ void MainWindow::performBubbleCapture(QPoint pt)
     {
         if (Settings::getDebugSaveCaptureImage())
         {
-            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) / Settings::getOutputCallExe().toDouble());
+            int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
             displayRect.setLeft(displayRect.left() - border);
             displayRect.setTop(displayRect.top() - border);
             displayRect.setWidth(displayRect.width() + border);

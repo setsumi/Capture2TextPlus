@@ -248,6 +248,10 @@ public:
     static QString getOutputCallExe() { return QSettings().value("Output/CallExe", defaultOutputCallExe).toString(); }
     static void setOutputCallExe(QString value) { QSettings().setValue("Output/CallExe", value); }
 
+    static const double defaultOutputCapturedPadding;
+    static double getOutputCapturedPadding() { return QSettings().value("Output/CapturedPadding", defaultOutputCapturedPadding).toDouble(); }
+    static void setOutputCapturedPadding(double value) { QSettings().setValue("Output/CapturedPadding", value); }
+
     static bool getOutputPopupTopmost() { return QSettings().value("Output/PopupTopmost", true).toBool(); }
     static void setOutputPopupTopmost(bool value) { QSettings().setValue("Output/PopupTopmost", value); }
 

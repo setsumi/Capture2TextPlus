@@ -179,6 +179,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     ui->checkBoxDebugPrependCoords->setChecked(Settings::getDebugPrependCoords());
     ui->checkBoxOutputCallExeEnable->setChecked(Settings::getOutputCallExeEnable());
     ui->lineEditOutputCallExe->setText(Settings::getOutputCallExe());
+    ui->doubleSpinBoxOutputCapturedPadding->setValue(Settings::getOutputCapturedPadding());
 
     ui->comboBoxReplaceLang->setCurrentText(Settings::getOcrLang());
     setReplacementTable(Settings::getOcrLang());
@@ -372,6 +373,7 @@ void SettingsDialog::on_SettingsDialog_accepted()
     Settings::setDebugPrependCoords(ui->checkBoxDebugPrependCoords->isChecked());
     Settings::setOutputCallExeEnable(ui->checkBoxOutputCallExeEnable->isChecked());
     Settings::setOutputCallExe(ui->lineEditOutputCallExe->text());
+    Settings::setOutputCapturedPadding(ui->doubleSpinBoxOutputCapturedPadding->value());
 
     saveReplacementTable(lastReplacementLang);
 
@@ -596,6 +598,7 @@ void SettingsDialog::on_labelOutputReset_linkActivated(const QString &)
 
     ui->checkBoxOutputCallExeEnable->setChecked(Settings::defaultOutputCallExeEnable);
     ui->lineEditOutputCallExe->setText(Settings::defaultOutputCallExe);
+    ui->doubleSpinBoxOutputCapturedPadding->setValue(Settings::defaultOutputCapturedPadding);
 }
 
 void SettingsDialog::on_comboBoxReplaceLang_currentTextChanged(const QString &text)

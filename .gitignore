@@ -33,3 +33,9 @@
 
 # Ignore QTCreator files
 *.pro.user
+
+conan.lock
+conan_imports_manifest.txt
+conanbuildinfo.*
+conaninfo.txt
+graph_info.json
