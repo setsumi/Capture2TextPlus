@@ -5,6 +5,7 @@ Mod of Capture2Text, sync from: https://sourceforge.net/projects/capture2text/
 ## Changes
 
 - option "Output->Save captured image" saves properly cut image including some padding
+- hot key cycle between text orientation goes between Horizontal and Vertical ignoring Auto
 
 ## Dependencies
 
