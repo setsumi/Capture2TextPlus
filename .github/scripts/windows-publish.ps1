@@ -30,6 +30,8 @@ function Main() {
     Invoke-WebRequest -Uri "https://github.com/setsumi/Capture2TextPlus/releases/download/tessdata/tessdata.zip" -OutFile $archiveName'\tessdata.zip'
     #extract zip
     Expand-Archive -LiteralPath $archiveName\tessdata.zip -DestinationPath $archiveName\tessdata
+	#remove extracted zip
+	Remove-Item -Path $archiveName\tessdata.zip
     # 拷贝exe
     Copy-Item release\$targetName $archiveName\
     Write-Host "copy item finished..."
