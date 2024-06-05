@@ -6,7 +6,7 @@ Mod of Capture2Text, sync from: https://sourceforge.net/projects/capture2text/
 
 - option "Output->Save captured image" saves properly cut image including some padding
 - hot key cycle of text orientation goes between Horizontal and Vertical ignoring Auto
-- updated to tesseract 5.3.3
+- updated to tesseract 5.3.3 from [here](https://conan.io/center/recipes?value=tesseract)
 
 ## Dependencies
 
