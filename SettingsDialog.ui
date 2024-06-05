@@ -1533,7 +1533,7 @@ ${capture}${linebreak}-----------${linebreak}
             <item row="0" column="2">
              <widget class="QDoubleSpinBox" name="doubleSpinBoxOutputCapturedPadding">
               <property name="minimum">
-               <double>0.010000000000000</double>
+               <double>0.000000000000000</double>
               </property>
               <property name="maximum">
                <double>1.000000000000000</double>
@@ -1542,7 +1542,7 @@ ${capture}${linebreak}-----------${linebreak}
                <double>0.010000000000000</double>
               </property>
               <property name="value">
-               <double>0.010000000000000</double>
+               <double>0.000000000000000</double>
               </property>
              </widget>
             </item>
