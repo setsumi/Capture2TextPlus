@@ -27,9 +27,9 @@ function Main() {
     New-Item -ItemType Directory $archiveName
     New-Item -ItemType Directory $archiveName\locale
     # download english tessdata
-    Invoke-WebRequest -Uri "https://github.com/GSam/Capture2Text/releases/download/Prototype/English.zip" -OutFile $archiveName'\English.zip'
+    Invoke-WebRequest -Uri "https://github.com/setsumi/Capture2TextPlus/releases/download/tessdata/tessdata.zip" -OutFile $archiveName'\tessdata.zip'
     #extract zip
-    Expand-Archive -LiteralPath $archiveName\English.zip -DestinationPath $archiveName\tessdata
+    Expand-Archive -LiteralPath $archiveName\tessdata.zip -DestinationPath $archiveName\tessdata
     # 拷贝exe
     Copy-Item release\$targetName $archiveName\
     Write-Host "copy item finished..."
