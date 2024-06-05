@@ -2,6 +2,10 @@
 
 Mod of Capture2Text, sync from: https://sourceforge.net/projects/capture2text/
 
+## Download
+
+https://github.com/setsumi/Capture2TextPlus/releases
+
 ## Changes
 
 - option "Output->Save captured image" saves properly cut image including some padding
