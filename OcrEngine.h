@@ -28,6 +28,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tesseract/baseapi.h"
 #include "allheaders.h"
+#include "pix_internal.h"
 
 
 class OcrEngine

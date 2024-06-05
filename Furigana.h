@@ -21,6 +21,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 #define FURIGANA_H
 
 #include "allheaders.h"
+#include "pix_internal.h"
 
 class Furigana
 {

@@ -22,6 +22,7 @@ along with Capture2Text.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QImage>
 #include "allheaders.h"
+#include "pix_internal.h"
 #include "PreProcessCommon.h"
 
 class PreProcess
