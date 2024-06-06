@@ -1,6 +1,6 @@
 # Capture2TextPlus
 
-Mod of Capture2Text, sync from: https://sourceforge.net/projects/capture2text/
+Windows mod of Capture2Text, code sync from: https://sourceforge.net/projects/capture2text/
 
 ## Download
 
@@ -14,11 +14,13 @@ https://github.com/setsumi/Capture2TextPlus/releases
 
 ## Dependencies
 
-Tesseract, Qt 5 (cannot be version 4), Leptonica
+Tesseract, Qt 5 (cannot be version 4), Leptonica ([full list](https://github.com/setsumi/Capture2TextPlus/raw/master/conanfile.txt))
 
 ## Build instructions
 
-### Windows:
+Auto build by Github Actions.
+
+### Manual build:
 1. Install Visual Studio 2019 with C++ toolchain
 2. Install Git for Windows
 3. Install Qt Creator
