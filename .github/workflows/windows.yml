@@ -108,5 +108,5 @@ jobs:
             Branch:          ${{ github.ref_name }}
             Commit:          ${{ steps.vars.outputs.sha_short }} 
             Qt version:      ${{ matrix.qt_ver }} ${{ matrix.qt_arch }}
-            Built with:      MSVC-64 Visual studio 2019, with English OCR. If you want other `Language`, build by yourself following steps.
+            Built with:      MSVC-64 Visual studio 2019
 
