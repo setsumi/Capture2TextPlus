@@ -1,10 +1,10 @@
 [requires]
-tesseract/5.3.3
+tesseract/5.3.4
 leptonica/1.83.1
 giflib/5.2.1
 jbig/20160605
 libarchive/3.7.2
-libcurl/8.6.0
+libcurl/8.8.0
 libdeflate/1.19
 libiconv/1.17
 libjpeg/9e
