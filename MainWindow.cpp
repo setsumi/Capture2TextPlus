@@ -468,7 +468,13 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
     ocrEngine->setVerticalOrientation(isVertical);
     setOcrEngineCommon();
-    QString ocrText = ocrEngine->performOcr(pixs, true);
+    // setsumi: disable unneeded OCR (1)
+    QString ocrText = "";
+    if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+            Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+    {
+        ocrText = ocrEngine->performOcr(pixs, true);
+    }
     pixDestroy(&pixs);
 
     if(Settings::getForwardTextLineCaptureFirstWord())
@@ -495,6 +501,7 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
+        // setsumi: save proper image
         if (Settings::getDebugSaveCaptureImage())
         {
             int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
@@ -510,8 +517,13 @@ void MainWindow::performForwardTextLineCapture(QPoint pt)
 
         createAutoCaptureBox();
         autoCaptureBox->autoCapture(displayRect);
-        ocrText = postProcess(ocrText);
-        outputOcrText(ocrText);
+        // setsumi: disable unneeded OCR (2)
+        if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+                Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+        {
+            ocrText = postProcess(ocrText);
+            outputOcrText(ocrText);
+        }
     }
 }
 
@@ -610,7 +622,13 @@ void MainWindow::performTextLineCapture(QPoint pt)
 
     ocrEngine->setVerticalOrientation(isVertical);
     setOcrEngineCommon();
-    QString ocrText = ocrEngine->performOcr(pixs, true);
+    // setsumi: disable unneeded OCR (1)
+    QString ocrText = "";
+    if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+            Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+    {
+        ocrText = ocrEngine->performOcr(pixs, true);
+    }
     pixDestroy(&pixs);
 
     QRect boundingBox = preProcess.getBoundingRect();
@@ -623,7 +641,8 @@ void MainWindow::performTextLineCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
-		if (Settings::getDebugSaveCaptureImage())
+        // setsumi: save proper image
+        if (Settings::getDebugSaveCaptureImage())
 		{
             int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
 			displayRect.setLeft(displayRect.left() - border);
@@ -638,8 +657,13 @@ void MainWindow::performTextLineCapture(QPoint pt)
 
         createAutoCaptureBox();
         autoCaptureBox->autoCapture(displayRect);
-        ocrText = postProcess(ocrText);
-        outputOcrText(ocrText);
+        // setsumi: disable unneeded OCR (2)
+        if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+                Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+        {
+            ocrText = postProcess(ocrText);
+            outputOcrText(ocrText);
+        }
     }
 }
 
@@ -727,7 +751,13 @@ void MainWindow::performBubbleCapture(QPoint pt)
         singleLine = (preProcess.getJapNumTextLines() == 1);
     }
 
-    QString ocrText = ocrEngine->performOcr(pixs, singleLine);
+    // setsumi: disable unneeded OCR (1)
+    QString ocrText = "";
+    if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+            Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+    {
+        ocrText = ocrEngine->performOcr(pixs, singleLine);
+    }
     pixDestroy(&pixs);
 
     QRect boundingBox = preProcess.getBoundingRect();
@@ -739,6 +769,7 @@ void MainWindow::performBubbleCapture(QPoint pt)
 
     if(displayRect.width() > minOcrWidth && displayRect.height() > minOcrHeight)
     {
+        // setsumi: save proper image
         if (Settings::getDebugSaveCaptureImage())
         {
             int border = (int)((double)qMin(displayRect.width(), displayRect.height()) * Settings::getOutputCapturedPadding());
@@ -754,8 +785,13 @@ void MainWindow::performBubbleCapture(QPoint pt)
 
         createAutoCaptureBox();
         autoCaptureBox->autoCapture(displayRect);
-        ocrText = postProcess(ocrText);
-        outputOcrText(ocrText);
+        // setsumi: disable unneeded OCR (2)
+        if(Settings::getOutputClipboard() || Settings::getOutputShowPopup() ||
+                Settings::getOutputLogFileEnable() || Settings::getOutputCallExeEnable())
+        {
+            ocrText = postProcess(ocrText);
+            outputOcrText(ocrText);
+        }
     }
 }
 
