@@ -10,7 +10,7 @@ https://github.com/setsumi/Capture2TextPlus/releases
 
 - option "Output->Save captured image" saves properly cut image including some padding
 - hot key cycle of text orientation goes between Horizontal and Vertical ignoring Auto
-- do not perform OCR if no output is specified
+- do not perform OCR if no text output is specified
 - updated to tesseract/5.4.0 from [here](https://conan.io/center/recipes?value=tesseract)
 
 ## Dependencies
