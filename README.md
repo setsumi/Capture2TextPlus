@@ -47,6 +47,9 @@ Build:
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
 qmake
 nmake
+nmake clean
+qmake CONFIG+=console
+nmake
 ```
 or use Qt Creator to build the project.
 After build copy `lib/*.dll` to the same folder as Capture2Text.exe file.In the same Capture2Text.exe folder, create a folder called `tessdata` and put the trained data into it.
