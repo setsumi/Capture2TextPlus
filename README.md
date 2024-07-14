@@ -1,4 +1,4 @@
-# Capture2TextPlus
+# Capture2Text Plus
 
 Windows mod of Capture2Text, code sync from: https://sourceforge.net/projects/capture2text/
 
