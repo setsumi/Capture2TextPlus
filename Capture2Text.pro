@@ -1,7 +1,7 @@
 QT += core
+QT += gui network texttospeech
 
 !console {
-    QT += gui network texttospeech
     QT += widgets
 }
 
@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     PostProcess.cpp \
     PreProcess.cpp \
     OcrEngine.cpp \
-    UtilsCommon.cpp
+    UtilsCommon.cpp \
+    Settings.cpp
 
 
 HEADERS  += \
@@ -76,13 +77,13 @@ HEADERS  += \
     PreProcess.h \
     PreProcessCommon.h \
     OcrEngine.h \
-    UtilsCommon.h
+    UtilsCommon.h \
+    Settings.h
 
 !console {
     SOURCES += \
         MainWindow.cpp \
         SettingsDialog.cpp \
-        Settings.cpp \
         PopupDialog.cpp \
         Preview.cpp \
         SampleBox.cpp \
@@ -101,7 +102,6 @@ HEADERS  += \
         RunGuard.h \
         SettingsDialog.h \
         Preview.h \
-        Settings.h \
         PopupDialog.h \
         SampleBox.h \
         Translate.h \

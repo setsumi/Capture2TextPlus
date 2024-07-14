@@ -33,7 +33,7 @@ function Main() {
 	#remove extracted zip
 	Remove-Item -Path $archiveName\tessdata.zip
     # 拷贝exe
-    Copy-Item release\$targetName $archiveName\
+    Copy-Item release\*.exe $archiveName\
     Write-Host "copy item finished..."
     # 拷贝依赖
     windeployqt --compiler-runtime $archiveName\$targetName
